@@ -1,12 +1,28 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, redirect, url_for, send_file
 import os
-import time
 
 app = Flask(__name__)
 
-def download_music(url):
+@app.route('/')
+def upload_form():
+    return '''
+    <form method="POST">
+    <label for="url">URL:</label>
+    <input type="text" name="url" id="url">
+    <input type="submit" value="Téléchargement">
+    </form>
+    '''
 
-    path = os.path.expanduser('~')
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    message = None
+    if request.method == 'POST':
+        url = request.form['url']
+        result = process_file(url)
+    return "Téléchargement terminé"
+
+def process_file(url):
+    path = os.path.expanduser('~/musics')
     download_param_album = '{artist}/{album}/{artist} - {title}'
     download_param_playlist = '{playlist}/{artists}/{album} - {title} {artist}'
 
@@ -19,11 +35,11 @@ def download_music(url):
         os.chdir(f"{path}")
         print("playlist found")
         os.system(f'python3 -m spotdl {url} --output "{download_param_playlist}"')
+    
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    message = None
-    if request.method == 'POST':
-        url = request.form['url']
-        message = download_music(url)
-    return render_template('index.html', message=message)
+# @app.route('/download/<path:filename>')
+# def download_file(filename):
+#     return send_file(filename, attachment_filename=filename, as_attachment=True)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=3000)
