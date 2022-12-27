@@ -19,7 +19,14 @@ def index():
     if request.method == 'POST':
         url = request.form['url']
         result = process_file(url)
-    return "Téléchargement terminé"
+    return ''' 
+    <form method="POST">
+    <label for="url">URL:</label>
+    <input type="text" name="url" id="url">
+    <input type="submit" value="Téléchargement">
+    </form>
+    <a> Téléchargement terminé </a>
+    '''
 
 def process_file(url):
     path = os.path.expanduser('~/musics')
