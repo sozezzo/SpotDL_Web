@@ -1,0 +1,40 @@
+
+body {
+    background-color: black;
+}
+
+h1 {
+    /* border: 2px #eee solid; */
+    color: rgb(24,216,96);
+    background-color: black;
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    color: white;
+}
+
+.url {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height:100%; */
+    background-color: black;
+    color: white
+}
+
+
+input[type="submit"] {
+    display: block;
+    margin: auto;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+  }
+
