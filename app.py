@@ -20,12 +20,8 @@ def index():
         url = request.form['url']
         result = process_file(url)
     return ''' 
-    <form method="POST">
-    <label for="url">URL:</label>
-    <input type="text" name="url" id="url">
-    <input type="submit" value="Téléchargement">
-    </form>
-    <a> Téléchargement terminé </a>
+    <h1> Téléchargement terminé </h1>
+    <button onclick="window.location.href = '/';">Télécharger à nouveau</button>
     '''
 
 def process_file(url):
