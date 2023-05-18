@@ -22,8 +22,8 @@ RUN spotdl --download-ffmpeg
 RUN apk update && apk add zip
 
 # copy the content of the local src directory to the working directory
-COPY static .
-COPY templates .
+COPY static ./static
+COPY templates ./templates
 COPY app.py .
 
 # command to run on container start
