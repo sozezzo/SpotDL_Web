@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+
+ 
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="static/css/style.css" , filename= 'style.css'>
@@ -11,6 +14,8 @@
 <body>
   <div class="container">
     <h1 class="title">SpotDL Web</h1>
+
+
     <div class="bordered">
       <p>
         <h3>Procédure</h3>
@@ -38,10 +43,163 @@
       <div class="form-group">
         <input type="text" class="form-control" name="url5" id="url5" pattern="^https://open\.spotify\.com/(?:album|playlist|track)/[\w-]+(?:\?si=[\w-]+)?$" placeholder="Entrez l'URL d'une Piste, d'un Album ou d'une Playlist">
       </div>
-      <button type="submit" class="btn" id="download-button" onclick="startDownload()">Télécharger</button>
-      <button type="reset" class="btn" id="refresh-button" onclick="refreshPage()">Rafraîchir</button>
-    </form>
-  </div>
 
+      <br/>
+      <div class="form-group">
+        <label for="Alternatif format de fichier">Alternatif format de fichier : </label> 
+        <input type="text" class="form-control" name="output-format" id="output-format">
+        <script>
+
+ 
+          // Attempt to get the "output-format" cookie
+          let outputFormatCookie = getCookie("output-format");
+          
+          // If the cookie exists, set the input field's value to the cookie's value
+          if(outputFormatCookie) {
+              document.getElementById('output-format').value = outputFormatCookie;
+          }
+ 
+
+          // Listen for changes in the input field
+          document.getElementById('output-format').addEventListener('change', (event) => {
+            // On change, set a new "output-format" cookie with the input's new value, which expires in 30 days
+            setCookie("output-format", event.target.value, 30);
+          });
+
+        </script>
+      </div>
+
+      <button type="submit" class="btn" id="download-button" onclick="startDownload()">Télécharger</button>
+      <button type="reset"  class="btn" id="refresh-button"  onclick="refreshPage()"  >Rafraîchir</button>
+    </form>
+
+  
+    <div class="bordered">
+      <p>
+        <h3>Exemple de format</h3>
+        <ul>
+          <li>{artist}/{album}/{artist} - {title}</li>
+          <li>{genre}/{artist} - {title}</li>
+          <li>{year} - {artist} - {title}</li>
+          <li>mon-playlist/{year} - {artist} - {title}</li>
+          <li>mes-chansons-noel/{artist} - {title}</li>
+        </ul>
+      <p>
+    </div>
+
+    <br/>
+    <label for="lable1">Tags pour le format de fichier</label> 
+    <table>
+      <thead>
+      <tr>
+      <th>Variable</th>
+      <th>Explanation</th>
+      <th>Example</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td><code>{title}</code></td>
+      <td>Song title</td>
+      <td>Dark Horse</td>
+      </tr>
+      <tr>
+      <td><code>{artists}</code></td>
+      <td>Song artists</td>
+      <td>Katy Perry, Juicy J</td>
+      </tr>
+      <tr>
+      <td><code>{artist}</code></td>
+      <td>Primary artist</td>
+      <td>Katy Perry</td>
+      </tr>
+      <tr>
+      <td><code>{album}</code></td>
+      <td>Album name</td>
+      <td>PRISM</td>
+      </tr>
+      <tr>
+      <td><code>{album-artist}</code></td>
+      <td>Primary artist of the album</td>
+      <td>Katy Perry</td>
+      </tr>
+      <tr>
+      <td><code>{genre}</code></td>
+      <td>Genre</td>
+      <td>dance pop</td>
+      </tr>
+      <tr>
+      <td><code>{disc-number}</code></td>
+      <td>Useful for multi-disc releases</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td><code>{disc-count}</code></td>
+      <td>Total number of discs in the album</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td><code>{duration}</code></td>
+      <td>Duration of the song in seconds</td>
+      <td>215.672</td>
+      </tr>
+      <tr>
+      <td><code>{year}</code></td>
+      <td>Year of release</td>
+      <td>2013</td>
+      </tr>
+      <tr>
+      <td><code>{original-date}</code></td>
+      <td>Date of original release</td>
+      <td>2013-01-01</td>
+      </tr>
+      <tr>
+      <td><code>{track-number}</code></td>
+      <td>Track number in the album</td>
+      <td>06</td>
+      </tr>
+      <tr>
+      <td><code>{tracks-count}</code></td>
+      <td>Total number of tracks in the album</td>
+      <td>13</td>
+      </tr>
+      <tr>
+      <td><code>{isrc}</code></td>
+      <td>International Standard Recording Code</td>
+      <td>USUM71311296</td>
+      </tr>
+      <tr>
+      <td><code>{track-id}</code></td>
+      <td>Spotify song ID</td>
+      <td>4jbmgIyjGoXjY01XxatOx6</td>
+      </tr>
+      <tr>
+      <td><code>{publisher}</code></td>
+      <td>Record label</td>
+      <td>Capitol Records (CAP)</td>
+      </tr>
+      <tr>
+      <td><code>{list-length}</code></td>
+      <td>Number of items in a playlist</td>
+      <td>10</td>
+      </tr>
+      <tr>
+      <td><code>{list-position}</code></td>
+      <td>Position of the song in a playlist</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td><code>{list-name}</code></td>
+      <td>Name of the playlist</td>
+      <td>Saved</td>
+      </tr>
+      <tr>
+      <td><code>{output-ext}</code></td>
+      <td>File extension</td>
+      <td>mp3</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

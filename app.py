@@ -7,10 +7,10 @@ import logging
 app = Flask(__name__)
 
 
-def process_file(urls):
-    download_param_album = '{artist}/{album}/{artist} - {title}'
-    download_param_playlist = '{playlist}/{artists}/{album} - {title} {artist}'
-    download_param_track = '{artist}/{album}/{artist} - {title}'
+def process_file(urls, download_param):
+    download_param_album = download_param or '{artist}/{album}/{artist} - {title}'
+    download_param_playlist = download_param or '{playlist}/{artists}/{album} - {title} {artist}'
+    download_param_track = download_param or '{artist}/{album}/{artist} - {title}'
 
     os.chdir('downloads')
     # os.system(f'rm -rf *')
@@ -23,6 +23,7 @@ def process_file(urls):
                 run(['python3', '-m', 'spotdl', url, '--output', download_param_playlist])
             elif "track" in url:
                 run(['python3', '-m', 'spotdl', url, '--output', download_param_track])
+
     # os.system(f'zip -r musics.zip ./downloads')
     # run(['zip', '-r', 'musics.zip', '.'])
     os.chdir('../')
@@ -52,6 +53,7 @@ def download_file():
         url3 = request.form['url3']
         url4 = request.form['url4']
         url5 = request.form['url5']
+        download_param = request.form['output-format']
 
         urls = [url1, url2, url3, url4, url5]
 
@@ -63,7 +65,7 @@ def download_file():
         if not os.path.exists('downloads'):
             os.makedirs('downloads')
 
-        process_file(urls)
+        process_file(urls, download_param)
 
     # path = "downloads/musics.zip"
     # return send_file(path, as_attachment=True)
